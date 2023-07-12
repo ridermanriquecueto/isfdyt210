@@ -23,3 +23,23 @@ class ListaEnlazada:
         while nodo_actual is not None:
             print(nodo_actual.dato)
             nodo_actual = nodo_actual.siguiente
+
+            def eliminar(self, dato):
+        actual = self.cabeza
+        anterior = None
+        encontrado = False
+
+        while actual and not encontrado:
+            if actual.dato == dato:
+                encontrado = True
+            else:
+                anterior = actual
+                actual = actual.siguiente
+
+        if actual is None:
+            return
+
+        if anterior is None:
+            self.cabeza = actual.siguiente
+        else:
+            anterior.siguiente = actual.siguiente

@@ -1,57 +1,56 @@
 class Nodo:
-    def __init__(self, valor):
-        self.valor = valor
+    def __init__(self, dato):
+        self.dato = dato
         self.siguiente = None
-        self.anterior = None
-
 
 class ListaEnlazada:
     def __init__(self):
-        self.primero = None
-        self.ultimo = None
+        self.cabeza = None
 
-    def agregar_elemento(self, valor):
-        nuevo_nodo = Nodo(valor)
-        if self.primero is None:
-            self.primero = nuevo_nodo
-            self.ultimo = nuevo_nodo
+    def agregar(self, dato):
+        nuevo_nodo = Nodo(dato)
+        if self.cabeza is None:
+            self.cabeza = nuevo_nodo
         else:
-            nuevo_nodo.anterior = self.ultimo
-            self.ultimo.siguiente = nuevo_nodo
-            self.ultimo = nuevo_nodo
+            actual = self.cabeza
+            while actual.siguiente:
+                actual = actual.siguiente
+            actual.siguiente = nuevo_nodo
+    def eliminar(self, dato):
+        actual = self.cabeza
+        anterior = None
+        encontrado = False
+        while actual and not encontrado:
+            if actual.dato == dato:
+                encontrado = True
+            else:
+                anterior = actual
+                actual = actual.siguiente
+        if actual is None:
+            return
+        if anterior is None:
+            self.cabeza = actual.siguiente
+        else:
+            anterior.siguiente = actual.siguiente
 
-    def obtener_nodo_anterior(self, nodo):
-        return nodo.anterior.valor if nodo.anterior else None
-
-    def obtener_nodo_siguiente(self, nodo):
-        return nodo.siguiente.valor if nodo.siguiente else None
-      
-    def mostrar_lista(self,indice):
-        for i in range(indice):
-            valor = int(input("Ingresa el valor del elemento {}: ".format(i+1)))
-        lista.agregar_elemento(valor)
+    def imprimir(self):
+        actual = self.cabeza
+        while actual:
+            print(actual.dato, end=" ")
+            actual = actual.siguiente
+        print()
 
 
+lista = ListaEnlazada()
+lista.agregar(1)
+lista.agregar(2)
+lista.agregar(3)
+lista.agregar(4)
 
+print("Lista original:")
+lista.imprimir()
 
+lista.eliminar(3)
 
-# Crea una lista enlazada ingresando datos desde teclado
-# lista = ListaEnlazada()
-
-
-# while True:
-#     valor = input("Ingrese un valor (o 'fin' para terminar): ")
-#     if valor == "fin":
-#         break
-#     lista.agregar_elemento(valor)
-
-
-# # Accede al nodo anterior y posterior de un nodo específico
-# indice = int(input("Ingrese el índice del nodo a consultar: "))
-# nodo_actual = lista.primero
-# for _ in range(indice):
-#     nodo_actual = nodo_actual.siguiente
-
-# print("Valor actual:", nodo_actual.valor)
-# print("Nodo anterior:", lista.obtener_nodo_anterior(nodo_actual))
-# print("Nodo siguiente:", lista.obtener_nodo_siguiente(nodo_actual))
+print("Lista después de eliminar el nodo con dato 3:")
+lista.imprimir()
